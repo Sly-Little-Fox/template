@@ -30,14 +30,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: "Check if eslintrc exists"
+        uses: andstor/file-existence-action@v2
+        with:
+          files: ".eslintrc.*"
+
       - name: Install ESLint
         run: |
           npm install eslint@8.10.0
           npm install @microsoft/eslint-formatter-sarif@2.1.7
 
       - name: Run ESLint
-        run: \[ -f .eslintrc.yml ] && npx eslint .
-          --config .eslintrc.yml
+        run: npx eslint .
           --ext .js,.jsx,.ts,.tsx
           --format @microsoft/eslint-formatter-sarif 
           --output-file eslint-results.sarif
